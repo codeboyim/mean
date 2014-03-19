@@ -3,9 +3,11 @@
         <li>
             <a class="navbar-brand" href="/">MEAN - A Modern Stack</a>
         </li>
-        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+        {% raw %}
+        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" class="ui-hide" ng-class="{active: $uiRoute}">
             <a href="#!/{{item.link}}">{{item.title}}</a>
         </li>
+        {% endraw %}
     </ul>
     <ul class="navbar-nav nav pull-right" data-ng-hide="global.authenticated">
         <li><a href="signup">Signup</a>
@@ -17,7 +19,7 @@
     <ul class="navbar-nav nav pull-right" data-ng-show="global.authenticated">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				{{global.user.name}} <b class="caret"></b>
+				{{req.user.name}} <b class="caret"></b>
 			</a>
             <ul class="dropdown-menu">
                 <li><a href="/signout">Signout</a>
