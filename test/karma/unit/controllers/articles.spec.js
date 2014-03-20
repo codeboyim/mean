@@ -19,18 +19,20 @@
 
             // Load the controllers module
             beforeEach(module('mean'));
+            beforeEach(module('stateMock'));
 
             // Initialize the controller and a mock scope
             var ArticlesController,
                 scope,
                 $httpBackend,
                 $stateParams,
-                $location;
+                $location,
+                $state;
 
             // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
             // This allows us to inject a service but then attach it to a variable
             // with the same name as the service.
-            beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+            beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _$state_) {
 
                 scope = $rootScope.$new();
 
@@ -44,13 +46,17 @@
 
                 $location = _$location_;
 
+                $state = _$state_;
+
+                // $httpBackend.whenGET(/views\/index.html/).respond();
+
             }));
 
             it('$scope.find() should create an array with at least one article object ' +
                 'fetched from XHR', function() {
 
                     // test expected GET request
-                    $httpBackend.expectGET('articles').respond([{
+                    $httpBackend.expectGET('api/articles').respond([{
                         title: 'An Article about MEAN',
                         content: 'MEAN rocks!'
                     }]);
@@ -118,7 +124,7 @@
                     scope.content = 'MEAN rocks!';
 
                     // test post request is sent
-                    $httpBackend.expectPOST('articles', postArticleData()).respond(responseArticleData());
+                    $httpBackend.expectPOST('api/articles', postArticleData()).respond(responseArticleData());
 
                     // Run controller
                     scope.create();

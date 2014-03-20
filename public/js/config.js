@@ -40,16 +40,14 @@ angular.module('mean').config(['$locationProvider',
     }
 ]);
 
-angular.module('mean').run(['Global', '$rootScope', '$state',
+angular.module('mean').run(['Global', '$rootScope','$state',
     function(Global, $rootScope, $state) {
-
         $rootScope.$on('$stateChangeStart', function(event, toState) {
-            
+
             if (!Global.authenticated && !toState.anonymous) {
                 event.preventDefault();
-                $state.go('home');
+                $state.transitionTo('home');
             }
-            
         });
     }
 ]);
