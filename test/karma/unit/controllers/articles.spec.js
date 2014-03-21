@@ -13,15 +13,14 @@
 
             beforeEach(function() {
                 jasmine.addMatchers({
-                    toEqualData: function(util, customEqualityTesters) {
+                    toEqualData: function() {
                         return {
                             compare: function(actual, expected) {
                                 var result = {};
                                 result.pass = angular.equals(actual, expected);
                                 return result;
                             }
-
-                        }
+                        };
                     }
                 });
             });
@@ -61,7 +60,7 @@
 
             }));
 
-            lit('$scope.find() should create an array with at least one article object ' +
+            it('$scope.find() should create an array with at least one article object ' +
                 'fetched from XHR', function() {
 
                     // test expected GET request
