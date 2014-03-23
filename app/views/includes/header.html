@@ -4,7 +4,7 @@
             <a class="navbar-brand" href="/">MEAN - A Modern Stack</a>
         </li>
         {% raw %}
-        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" class="ui-hide" ng-class="{active: $uiRoute}">
+        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
             <a href="#!/{{item.link}}">{{item.title}}</a>
         </li>
         {% endraw %}
