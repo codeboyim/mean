@@ -19,6 +19,13 @@ module.exports = function(grunt) {
                     livereload: true
                 }
             },
+            compass: {
+                files: ['src/scss/**'],
+                tasks: ['compass'],
+                options: {
+                    livereload: true
+                }
+            },
             css: {
                 files: ['public/css/**'],
                 tasks: ['csslint'],
@@ -38,6 +45,25 @@ module.exports = function(grunt) {
         uglify: {
             production: {
                 files: '<%= assets.js %>'
+            }
+        },
+        compass: {
+
+            options: {
+                sassDir: 'src/scss',
+                cssDir: 'public/css'
+            },
+
+            dev: {
+                options: {
+
+                }
+            },
+            dist: {
+                options: {
+                    outputStyle: 'compressed',
+                    noLineComments: true
+                }
             }
         },
         csslint: {
@@ -95,6 +121,7 @@ module.exports = function(grunt) {
     });
 
     //Load NPM tasks
+    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -111,9 +138,9 @@ module.exports = function(grunt) {
 
     //Default task(s).
     if (process.env.NODE_ENV === 'production') {
-        grunt.registerTask('default', ['jshint', 'csslint', 'cssmin', 'uglify', 'concurrent']);
+        grunt.registerTask('default', ['jshint', 'compass', 'csslint', 'cssmin', 'uglify', 'concurrent']);
     } else {
-        grunt.registerTask('default', ['jshint', 'csslint', 'concurrent']);
+        grunt.registerTask('default', ['jshint', 'compass:dev', 'csslint', 'concurrent']);
     }
 
     //Test task.
