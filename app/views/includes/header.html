@@ -1,30 +1,33 @@
-<div class="" data-ng-controller="HeaderController">
+<div class="">
     <ul class="navbar-nav nav">
         <li>
-            <a class="navbar-brand" href="/">MEAN - A Modern Stack</a>
+            <a class="navbar-brand" ui-sref="home">MEAN - A Modern Stack</a>
         </li>
-        {% raw %}
-        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-            <a href="#!/{{item.link}}">{{item.title}}</a>
+        {% if req.isAuthenticated() %} {% for item in menu %}
+        <li ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+            <a ui-sref="{{item.route}}">{{item.title}}</a>
         </li>
-        {% endraw %}
+        {% endfor %} {% endif %}
     </ul>
-    <ul class="navbar-nav nav pull-right" data-ng-hide="global.authenticated">
+    {% if !req.isAuthenticated() %}
+    <ul class="navbar-nav nav pull-right">
         <li><a href="signup">Signup</a>
         </li>
         <li class="divider-vertical"></li>
         <li><a href="signin">Signin</a>
         </li>
     </ul>
-    <ul class="navbar-nav nav pull-right" data-ng-show="global.authenticated">
+    {% else %}
+    <ul class="navbar-nav nav pull-right">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				{{req.user.name}} <b class="caret"></b>
-			</a>
+                {{req.user.name}} <b class="caret"></b>
+            </a>
             <ul class="dropdown-menu">
                 <li><a href="/signout">Signout</a>
                 </li>
             </ul>
         </li>
     </ul>
+    {% endif %}
 </div>
