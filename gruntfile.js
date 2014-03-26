@@ -6,6 +6,13 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         assets: grunt.file.readJSON('config/assets.json'),
         watch: {
+            coffee: {
+                files: ['src/coffee/**/*.coffee'],
+                tasks: ['coffee', 'coffeelint'],
+                options: {
+                    livereload: true
+                }
+            },
             js: {
                 files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js'],
                 tasks: ['jshint'],
@@ -45,6 +52,31 @@ module.exports = function(grunt) {
         uglify: {
             production: {
                 files: '<%= assets.js %>'
+            }
+        },
+        coffee: {
+            dev: {
+                options: {
+                    bare: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'src/coffee/',
+                    src: ['**/*.coffee'],
+                    dest: 'public/js/',
+                    ext: '.js'
+                }]
+            }
+        },
+        coffeelint: {
+            options: {
+                force: true,
+                configFile: '.coffeelintrc'
+            },
+            dev: {
+                files: [{
+                    src: ['src/coffee/**/*.coffee']
+                }]
             }
         },
         compass: {
@@ -121,6 +153,8 @@ module.exports = function(grunt) {
     });
 
     //Load NPM tasks
+    grunt.loadNpmTasks('grunt-coffeelint');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -140,7 +174,7 @@ module.exports = function(grunt) {
     if (process.env.NODE_ENV === 'production') {
         grunt.registerTask('default', ['jshint', 'compass', 'csslint', 'cssmin', 'uglify', 'concurrent']);
     } else {
-        grunt.registerTask('default', ['jshint', 'compass:dev', 'csslint', 'concurrent']);
+        grunt.registerTask('default', ['coffee:dev', 'coffeelint', 'jshint', 'compass:dev', 'csslint', 'concurrent']);
     }
 
     //Test task.
