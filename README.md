@@ -1,3 +1,3 @@
-mean-store
+mean-store  [![Build Status](https://travis-ci.org/codeboyim/mean-store.svg?branch=master)](https://travis-ci.org/codeboyim/mean-store)
 -----------
 An experimental project to learn MEAN
