@@ -70,7 +70,7 @@ var walk = function(path) {
 walk(routes_path);
 
 // Bootstrap services
-var routes_path = __dirname + '/app/services';
+var services_path = __dirname + '/app/services';
 var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
         var newPath = path + '/' + file;
@@ -80,7 +80,7 @@ var walk = function(path) {
         }
     });
 };
-walk(routes_path);
+walk(services_path);
 
 
 // Start the app by listening on <port>
