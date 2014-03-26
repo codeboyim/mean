@@ -1,7 +1,7 @@
 <div class="">
     <ul class="navbar-nav nav">
         <li>
-            <a class="navbar-brand" ui-sref="home">MEAN - A Modern Stack</a>
+            <a class="navbar-brand" ui-sref="home">MEAN Store</a>
         </li>
         {% if req.isAuthenticated() %} {% for item in menu %}
         <li ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
@@ -24,7 +24,8 @@
                 {{req.user.name}} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="/signout">Signout</a>
+                <li>
+                    <a href="/signout">Signout</a>
                 </li>
             </ul>
         </li>
