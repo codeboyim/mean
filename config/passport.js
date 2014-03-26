@@ -92,28 +92,39 @@ module.exports = function(passport) {
             callbackURL: config.facebook.callbackURL
         },
         function(accessToken, refreshToken, profile, done) {
+
             User.findOne({
                 'facebook.id': profile.id
-            }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    user = new User({
-                        name: profile.displayName,
-                        email: profile.emails[0].value,
-                        username: profile.username,
-                        provider: 'facebook',
-                        facebook: profile._json
-                    });
+            }).exec()
+                .then(function(user) {
+
+                    if (!user) {
+                        return User.findOne({
+                            'email': profile.emails[0].value
+                        }).exec();
+                    } else {
+                        return user;
+                    }
+
+                })
+                .then(function(user) {
+                    if (!user) {
+                        user = new User({
+                            name: profile.displayName,
+                            email: profile.emails[0].value,
+                            username: profile.username || profile.emails[0].value
+                        });
+                    }
+                    user.provider = 'facebook';
+                    user.facebook = profile._json;
                     user.save(function(err) {
                         if (err) console.log(err);
                         return done(err, user);
                     });
-                } else {
-                    return done(err, user);
-                }
-            });
+                }, function(err) {
+                    console.log(err);
+                    return done(err);
+                });
         }
     ));
 
