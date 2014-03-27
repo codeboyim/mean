@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+ require('coffee-script/register');
 var express = require('express'),
     fs = require('fs'),
     passport = require('passport'),
@@ -46,6 +47,19 @@ require('./config/passport')(passport);
 
 var app = express();
 
+// Bootstrap services
+var services_path = __dirname + '/app/services';
+var walk = function(path) {
+    fs.readdirSync(path).forEach(function(file) {
+        var newPath = path + '/' + file;
+        var stat = fs.statSync(newPath);
+        if (stat.isFile() && /(.*)\.(js$|coffee$)/.test(file)) {
+            require(newPath)(app, passport);
+        }
+    });
+};
+walk(services_path);
+
 // Express settings
 require('./config/express')(app, passport, db);
 
@@ -68,20 +82,6 @@ var walk = function(path) {
     });
 };
 walk(routes_path);
-
-// Bootstrap services
-var services_path = __dirname + '/app/services';
-var walk = function(path) {
-    fs.readdirSync(path).forEach(function(file) {
-        var newPath = path + '/' + file;
-        var stat = fs.statSync(newPath);
-        if (stat.isFile() && /(.*)\.(js$|coffee$)/.test(file)) {
-            require(newPath)(app, passport);
-        }
-    });
-};
-walk(services_path);
-
 
 // Start the app by listening on <port>
 var port = process.env.PORT || config.port;

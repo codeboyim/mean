@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         assets: grunt.file.readJSON('config/assets.json'),
         watch: {
             coffee: {
-                files: ['src/coffee/**/*.coffee'],
+                files: ['**/*.coffee'],
                 tasks: ['coffee', 'coffeelint'],
                 options: {
                     livereload: true
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
             },
             dev: {
                 files: [{
-                    src: ['src/coffee/**/*.coffee']
+                    src: ['src/coffee/**/*.coffee', 'app/**/*.coffee']
                 }]
             }
         },
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
                 options: {
                     args: [],
                     ignore: ['public/**'],
-                    ext: 'js,html',
+                    ext: 'js,html,coffee',
                     nodeArgs: ['--debug'],
                     delayTime: 1,
                     env: {
