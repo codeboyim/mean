@@ -1,18 +1,23 @@
 'use strict';
 
 // Articles routes use articles controller
-var articles = require('../api/articles');
-var authorization = require('./middlewares/authorization');
+var articles = require('../../api/articles');
+var authorization = require('../middlewares/authorization');
 
 // Article authorization helpers
 var hasAuthorization = function(req, res, next) {
-	if (req.article.user.id !== req.user.id) {
+    if (req.article.user.id !== req.user.id) {
         return res.send(401, 'User is not authorized');
     }
     next();
 };
 
 module.exports = function(app) {
+
+    app.get(/^\/articles/, function(req, res, next) {
+        req.url = '/';
+        next();
+    });
 
     // articles api
     app.get('/api/articles', articles.all);

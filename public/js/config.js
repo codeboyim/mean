@@ -1,7 +1,6 @@
 'use strict';
 angular.module('mean').config([
-  '$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/');
+  '$stateProvider', function($stateProvider) {
     return $stateProvider.state('all articles', {
       url: '/articles',
       templateUrl: 'views/articles/list.html',
@@ -25,16 +24,17 @@ angular.module('mean').config([
 
 angular.module('mean').config([
   '$locationProvider', function($locationProvider) {
-    return $locationProvider.hashPrefix('!');
+    return $locationProvider.hashPrefix('!').html5Mode(true);
   }
 ]);
 
 angular.module('mean').run([
-  'Global', '$rootScope', '$state', function(Global, $rootScope, $state) {
+  'Global', '$rootScope', '$window', function(Global, $rootScope, $window) {
     return $rootScope.$on('$stateChangeStart', function(event, toState) {
       if (!Global.authenticated && !toState.anonymous) {
         event.preventDefault();
-        return $state.transitionTo('home');
+        $window.location.href = '/signin';
+        return null;
       }
     });
   }

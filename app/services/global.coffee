@@ -6,8 +6,9 @@ initGlobalVariables = (req, res, next) ->
 
 	res.locals.globals = {
 		menu:[
-			{'title': 'Articles','link': 'articles','route': 'all articles'}
-			{'title': 'Create New Article','link': 'articles/create','route': 'create article'}
+			{'title': 'Articles','link': 'articles'}
+			{'title': 'Create New Article','link': 'articles/create'}
+			{'title': 'Admin','link': 'admin'}
 		]
 	}
 

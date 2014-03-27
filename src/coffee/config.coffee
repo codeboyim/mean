@@ -3,10 +3,9 @@
 #Setting up route
 angular.module('mean').config [
         '$stateProvider'
-        '$urlRouterProvider'
-        ($stateProvider, $urlRouterProvider) ->
+        ($stateProvider) ->
             # For unmatched routes:
-            $urlRouterProvider.otherwise '/'
+            # $urlRouterProvider.otherwise '/'
 
             # states for my app
             $stateProvider
@@ -33,13 +32,13 @@ angular.module('mean').config ['$locationProvider',
 
     ($locationProvider) ->
 
-        $locationProvider.hashPrefix('!')
+        $locationProvider.hashPrefix('!').html5Mode true
 
 ]
 
-angular.module('mean').run ['Global', '$rootScope','$state',
+angular.module('mean').run ['Global', '$rootScope','$window',
     
-    (Global, $rootScope, $state) ->
+    (Global, $rootScope, $window) ->
         
         $rootScope.$on '$stateChangeStart',
 
@@ -47,6 +46,6 @@ angular.module('mean').run ['Global', '$rootScope','$state',
 
                 if !Global.authenticated and !toState.anonymous
                     event.preventDefault()
-                    $state.transitionTo 'home'
-    
+                    $window.location.href = '/signin'
+                    null
 ]

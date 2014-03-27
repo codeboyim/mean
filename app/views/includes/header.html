@@ -1,20 +1,20 @@
 <div class="">
     <ul class="navbar-nav nav">
         <li>
-            <a class="navbar-brand" href="/">MEAN Store</a>
+            <a class="navbar-brand" href="/" target="_self">MEAN Store</a>
         </li>
         {% if req.isAuthenticated() %} {% for item in globals.menu %}
         <li ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-            <a ui-sref="{{item.route}}">{{item.title}}</a>
+            <a href="/{{item.link}}" target="_self">{{item.title}}</a>
         </li>
         {% endfor %} {% endif %}
     </ul>
     {% if !req.isAuthenticated() %}
     <ul class="navbar-nav nav pull-right">
-        <li><a href="signup">Signup</a>
+        <li><a href="/signup" target="_self">Signup</a>
         </li>
         <li class="divider-vertical"></li>
-        <li><a href="signin">Signin</a>
+        <li><a href="/signin" target="_self">Signin</a>
         </li>
     </ul>
     {% else %}
@@ -25,7 +25,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="/signout">Signout</a>
+                    <a href="/signout" target="_self">Signout</a>
                 </li>
             </ul>
         </li>
