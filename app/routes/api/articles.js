@@ -14,11 +14,6 @@ var hasAuthorization = function(req, res, next) {
 
 module.exports = function(app) {
 
-    app.get(/^\/articles/, function(req, res, next) {
-        req.url = '/';
-        next();
-    });
-
     // articles api
     app.get('/api/articles', articles.all);
     app.post('/api/articles', authorization.requiresLogin, articles.create);

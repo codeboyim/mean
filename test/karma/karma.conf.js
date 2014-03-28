@@ -32,7 +32,7 @@ module.exports = function(config) {
             'public/js/services/articles.js',
             'public/js/controllers/articles.js',
             'public/js/controllers/index.js',
-            'public/js/init.js',            
+            'public/js/init.js',
             'test/karma/unit/**/*.js'
         ],
 
