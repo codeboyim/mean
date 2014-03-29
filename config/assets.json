@@ -14,7 +14,8 @@
 			"public/lib/angular-bootstrap/ui-bootstrap.js",
 			"public/lib/angular-bootstrap/ui-bootstrap-tpls.js",
 			"public/lib/angular-ui-utils/route.js",
-			"public/js/**/*.js"
+			"public/app/**/*.js",
+			"public/common/**/*.js"
 		]
 	}
 }

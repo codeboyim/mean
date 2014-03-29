@@ -24,15 +24,8 @@ module.exports = function(config) {
             'public/lib/angular-ui-utils/route.js',
             'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
             'public/lib/angular-bootstrap/ui-bootstrap.js',
-            'public/js/app.js',
-            'public/js/config.js',
-            'public/js/directives.js',
-            'public/js/filters.js',
-            'public/js/services/global.js',
-            'public/js/services/articles.js',
-            'public/js/controllers/articles.js',
-            'public/js/controllers/index.js',
-            'public/js/init.js',
+            'public/app/**/*.js',
+            'public/common/**/*.js',
             'test/karma/unit/**/*.js'
         ],
 
@@ -53,8 +46,8 @@ module.exports = function(config) {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            'public/js/controllers/*.js': ['coverage'],
-            'public/js/services/*.js': ['coverage']
+            'public/app/**/*.js': ['coverage'],
+            'public/common/**/*.js': ['coverage']
         },
 
         coverageReporter: {

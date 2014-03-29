@@ -3,20 +3,23 @@ angular.module('mean').config([
   '$stateProvider', function($stateProvider) {
     return $stateProvider.state('all articles', {
       url: '/articles',
-      templateUrl: 'views/articles/list.html',
+      templateUrl: 'app/articles/views/list.html',
       anonymous: true
     }).state('create article', {
       url: '/articles/create',
-      templateUrl: 'views/articles/create.html'
+      templateUrl: 'app/articles/views/create.html'
     }).state('edit article', {
       url: '/articles/:articleId/edit',
-      templateUrl: 'views/articles/edit.html'
+      templateUrl: 'app/articles/views/edit.html'
     }).state('article by id', {
       url: '/articles/:articleId',
-      templateUrl: 'views/articles/view.html'
+      templateUrl: 'app/articles/views/view.html'
+    }).state('admin', {
+      url: '/admin',
+      templateUrl: 'app/admin/views/default.html'
     }).state('home', {
       url: '/',
-      templateUrl: 'views/index.html',
+      templateUrl: 'app/home/views/index.html',
       anonymous: true
     });
   }

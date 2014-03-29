@@ -5,24 +5,29 @@ angular.module('mean').config [
         '$stateProvider'
         ($stateProvider) ->
             # For unmatched routes:
-            # $urlRouterProvider.otherwise '/'
+            #$urlRouterProvider.otherwise '/'
 
             # states for my app
             $stateProvider
+                # states for articles
                 .state('all articles'
-                    url: '/articles',templateUrl: 'views/articles/list.html',anonymous: true
+                    url: '/articles',templateUrl: 'app/articles/views/list.html',anonymous: true
                 )
                 .state('create article'
-                    url: '/articles/create', templateUrl: 'views/articles/create.html'
+                    url: '/articles/create', templateUrl: 'app/articles/views/create.html'
                 )
                 .state('edit article'
-                    url: '/articles/:articleId/edit', templateUrl: 'views/articles/edit.html'
+                    url: '/articles/:articleId/edit', templateUrl: 'app/articles/views/edit.html'
                 )
                 .state('article by id'
-                    url: '/articles/:articleId', templateUrl: 'views/articles/view.html'
+                    url: '/articles/:articleId', templateUrl: 'app/articles/views/view.html'
+                )
+                #states for admin
+                .state('admin'
+                    url: '/admin', templateUrl: 'app/admin/views/default.html'
                 )
                 .state('home'
-                    url: '/', templateUrl: 'views/index.html', anonymous: true
+                    url: '/', templateUrl: 'app/home/views/index.html', anonymous: true
                 )
     
 ]

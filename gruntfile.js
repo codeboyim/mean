@@ -14,27 +14,27 @@ module.exports = function(grunt) {
                 }
             },
             js: {
-                files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js'],
+                files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/app/**/*.js', 'test/**/*.js'],
                 tasks: ['jshint'],
                 options: {
                     livereload: true
                 }
             },
             html: {
-                files: ['public/views/**', 'app/views/**'],
+                files: ['public/app/**/*.html', 'app/views/**'],
                 options: {
                     livereload: true
                 }
             },
             compass: {
-                files: ['src/scss/**'],
-                tasks: ['compass'],
+                files: ['public/css/**/*.scss'],
+                tasks: ['compass:dev'],
                 options: {
                     livereload: true
                 }
             },
             css: {
-                files: ['public/css/**'],
+                files: ['public/css/**/*.css'],
                 tasks: ['csslint'],
                 options: {
                     livereload: true
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         },
         jshint: {
             all: {
-                src: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/js/**', 'test/**/*.js', '!test/coverage/**/*.js'],
+                src: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/app/**/*.js', 'test/**/*.js', '!test/coverage/**/*.js'],
                 options: {
                     jshintrc: true
                 }
@@ -61,9 +61,7 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'src/coffee/',
-                    src: ['**/*.coffee'],
-                    dest: 'public/js/',
+                    src: ['public/app/**/*.coffee'],
                     ext: '.js'
                 }]
             }
@@ -75,15 +73,15 @@ module.exports = function(grunt) {
             },
             dev: {
                 files: [{
-                    src: ['src/coffee/**/*.coffee', 'app/**/*.coffee']
+                    src: ['public/app/**/*.coffee', 'app/**/*.coffee']
                 }]
             }
         },
         compass: {
 
             options: {
-                sassDir: 'src/scss',
-                cssDir: 'public/css'
+                sassPath: 'public/css/',
+                cssPath: 'public/css'
             },
 
             dev: {
@@ -99,11 +97,9 @@ module.exports = function(grunt) {
             }
         },
         csslint: {
+            files: ['public/css/**/*.css'],
             options: {
                 csslintrc: '.csslintrc'
-            },
-            all: {
-                src: ['public/css/**/*.css']
             }
         },
         cssmin: {
@@ -117,7 +113,7 @@ module.exports = function(grunt) {
                 options: {
                     args: [],
                     ignore: ['public/**'],
-                    ext: 'js,html,coffee',
+                    ext: 'js,html,coffee,json',
                     nodeArgs: ['--debug'],
                     delayTime: 1,
                     env: {
