@@ -17,10 +17,12 @@ module.exports = function(app, passport) {
     app.param('userId', users.user);
 
     // Setting the local strategy route
-    app.post('/users/session', passport.authenticate('local', {
-        failureRedirect: '/signin',
-        failureFlash: true
-    }), users.session);
+    // app.post('/users/session', passport.authenticate('local', {
+    //     failureRedirect: '/signin',
+    //     failureFlash: true
+    // }), users.session);
+
+    app.post('/users/session', passport.authenticate('local'));
 
     // Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {

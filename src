@@ -1,0 +1,201 @@
+(function() {
+  'use strict';
+  angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'ui.route', 'mean.system', 'mean.articles']);
+
+  angular.module('mean.system', []);
+
+  angular.module('mean.articles', []);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').controller('AuthController', [
+    '$scope', '$http', '$rootScope', 'Auth', 'AUTH_EVENTS', function($scope, $http, $rootScope, Auth, AUTH_EVENTS) {
+      $scope.login = function(credentials) {
+        return Auth.login(credentials).then(function() {
+          return $rootScope.$broadcast(AUTH_EVENTS['loginSuccess']);
+        }, function() {
+          return $rootScope.$broadcast(AUTH_EVENTS['loginFailed']);
+        });
+      };
+      return null;
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').config([
+    '$locationProvider', function($locationProvider) {
+      return $locationProvider.hashPrefix('!').html5Mode(true);
+    }
+  ]);
+
+  angular.module('mean').run([
+    'Global', '$rootScope', '$window', function(Global, $rootScope, $window) {
+      return $rootScope.$on('$stateChangeStart', function(event, toState) {
+        return console.log(toState.name);
+      });
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').config([
+    '$stateProvider', 'ACCESS_LEVELS', function($stateProvider, ACCESS_LEVELS) {
+      return $stateProvider.state('all articles', {
+        url: '/articles',
+        templateUrl: 'app/articles/views/list.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['public']
+        }
+      }).state('create article', {
+        url: '/articles/create',
+        templateUrl: 'app/articles/views/create.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['user']
+        }
+      }).state('edit article', {
+        url: '/articles/:articleId/edit',
+        templateUrl: 'app/articles/views/edit.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['user']
+        }
+      }).state('article by id', {
+        url: '/articles/:articleId',
+        templateUrl: 'app/articles/views/view.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['user']
+        }
+      }).state('auth', {
+        abstract: true,
+        templateUrl: 'app/auth/views/auth.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['public']
+        }
+      }).state('auth.signin', {
+        url: '/signin',
+        templateUrl: 'app/auth/views/signin.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['public']
+        }
+      }).state('admin', {
+        url: '/admin',
+        templateUrl: 'app/admin/views/default.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['admin']
+        }
+      }).state('home', {
+        url: '/',
+        templateUrl: 'app/home/views/index.html',
+        data: {
+          accessLevel: ACCESS_LEVELS['public']
+        }
+      });
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').constant('ACCESS_LEVELS', {
+    "public": '*',
+    user: '?',
+    admin: ['admin']
+  });
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').constant('AUTH_EVENTS', {
+    loginSuccess: 'auth-login-success',
+    loginFailed: 'auth-login-failed',
+    logoutSuccess: 'auth-logout-success',
+    sessionTimeout: 'auth-session-timeout',
+    notAuthenticated: 'auth-not-authenticated',
+    notAuthorized: 'auth-not-authorized'
+  });
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').constant('USER_ROLES', {
+    admin: 'admin',
+    user: 'user'
+  });
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var _;
+
+  _ = require('lodash');
+
+  angular.module('mean').factory('Auth', [
+    '$http', 'Session', function($http, Session) {
+      return {
+        login: function(credentials) {
+          return $http.post('/user/session', credentials).then(function(profile) {
+            return Session.create(profile);
+          });
+        },
+        isAuthenticated: function() {
+          return Session.profile !== null;
+        },
+        isAuthorized: function(authorizedRoles) {
+          var isAuthorized;
+          isAuthorized = false;
+          authorizedRoles = (function() {
+            switch (false) {
+              case !angular.isString(authorizedRoles):
+                return [authorizedRoles];
+              case !angular.isArray(authorizedRoles):
+                return authorizedRoles;
+              default:
+                return [];
+            }
+          })();
+          if ((Session.profile != null) && (Session.profile.roles != null)) {
+            isAuthorized = (function() {
+              switch (false) {
+                case authorizedRoles.indexOf('?') === -1:
+                  return true;
+                case !angular.isString(Session.profile.roles):
+                  return authorizedRoles.indexOf(Session.profile.roles) !== -1;
+                case !angular.isArray(Session.profile.roles):
+                  return _.intersection(authorizedRoles, Session.profile.roles).length !== 0;
+                default:
+                  return false;
+              }
+            })();
+          } else {
+            isAuthorized = authorizedRoles.indexOf('*') !== -1;
+          }
+          return isAuthorized;
+        }
+      };
+    }
+  ]);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  angular.module('mean').service('Session', function() {
+    this.create = function(profile) {
+      return this.profile = profile;
+    };
+    return this.destroy = function() {
+      return this.profile = null;
+    };
+  });
+
+}).call(this);

@@ -10,6 +10,8 @@
     "bootstrap": "3.0.3",
     "angular-bootstrap": "0.10.0",
     "angular-ui-router": "#master",
-    "angular-ui-utils": "bower-route"
+    "angular-ui-utils": "bower-route",
+    "angular-lodash": "~0.1.0",
+    "lodash": "~2.4.1"
   }
 }

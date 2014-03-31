@@ -59,12 +59,11 @@ module.exports = function(grunt) {
                 options: {
                     bare: true
                 },
-                files: [{
-                    expand: true,
-                    src: ['public/app/**/*.coffee'],
-                    ext: '.js'
-                }]
+                expand: true,
+                src: ['public/**/*.coffee'],
+                ext: '.js'
             }
+
         },
         coffeelint: {
             options: {
