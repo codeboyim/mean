@@ -4,17 +4,16 @@ angular.module('mean').controller('AuthController', [
 	'$scope'
 	'$http'
 	'$rootScope'
+	'$location'
 	'Auth'
-	'AUTH_EVENTS'
-	($scope, $http, $rootScope, Auth, AUTH_EVENTS)->
-		$scope.login = (credentials) ->
-			Auth.login(credentials).then(
+	($scope, $http, $rootScope, $location, Auth)->
+		$scope.login = (user) ->
+			Auth.login(user
 				()->
-					$rootScope.$broadcast AUTH_EVENTS.loginSuccess
+					$location.path '/'
 				()->
-					$scope.error = 'wrong username or password'
-					$rootScope.$broadcast AUTH_EVENTS.loginFailed
+					$scope.error = 'Failed to login'
 			)
-
+		
 		null
 ])

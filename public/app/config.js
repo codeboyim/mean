@@ -6,16 +6,17 @@ angular.module('mean').config([
 ]);
 
 angular.module('mean').run([
-  'Global', '$rootScope', '$window', 'Session', 'Auth', 'AUTH_EVENTS', function(Global, $rootScope, $window, Session, Auth, AUTH_EVENTS) {
-    return $rootScope.$on('$stateChangeStart', function(event, next) {
-      var authorizedRoles;
-      authorizedRoles = next.data.accessLevel;
-      if (!Auth.isAuthorized(authorizedRoles)) {
+  '$rootScope', '$window', '$state', 'Auth', function($rootScope, $window, $state, Auth) {
+    return $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
+      if (!Auth.authorize(toState.data.accessLevel)) {
+        console.log('unauthorized access');
         event.preventDefault();
-        if (Auth.isAuthenticated()) {
-          return $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-        } else {
-          return $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        if (fromState.url === '^') {
+          if (Auth.isLoggedIn()) {
+            return $state.go('home');
+          } else {
+            return $state.go('auth.signin');
+          }
         }
       }
     });

@@ -10,25 +10,22 @@ angular.module('mean').config ['$locationProvider',
 ]
 
 angular.module('mean').run [
-    'Global'
     '$rootScope'
     '$window'
-    'Session'
+    '$state'
     'Auth'
-    'AUTH_EVENTS'
-    (Global, $rootScope, $window, Session, Auth, AUTH_EVENTS) ->
+    ($rootScope, $window, $state, Auth) ->
         
         $rootScope.$on '$stateChangeStart',
-            (event, next) ->
-                authorizedRoles = next.data.accessLevel
+            (event, toState, toParams, fromState) ->
                 
-                if not Auth.isAuthorized authorizedRoles
+                if not Auth.authorize toState.data.accessLevel
+                    console.log 'unauthorized access'
                     event.preventDefault()
 
-                    if Auth.isAuthenticated()
-                        $rootScope.$broadcast AUTH_EVENTS.notAuthorized
-                    else
-                        $rootScope.$broadcast AUTH_EVENTS.notAuthenticated
-                
-                
+                    if fromState.url is '^'
+                        if Auth.isLoggedIn()
+                            $state.go 'home'
+                        else
+                            $state.go 'auth.signin'
 ]
