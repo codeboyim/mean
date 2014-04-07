@@ -7,9 +7,10 @@ module.exports = function(grunt) {
         assets: grunt.file.readJSON('config/assets.json'),
         watch: {
             coffee: {
-                files: ['**/*.coffee'],
-                tasks: ['coffee', 'coffeelint'],
+                files: ['src/coffee/**/*.coffee', 'app/**/*.coffee'],
+                tasks: ['coffeelint:dev', 'coffee:dev', 'jshint'],
                 options: {
+                    spawn: false,
                     livereload: true
                 }
             },
@@ -17,6 +18,7 @@ module.exports = function(grunt) {
                 files: ['gruntfile.js', 'server.js', 'app/**/*.js', 'public/app/**/*.js', 'test/**/*.js'],
                 tasks: ['jshint'],
                 options: {
+                    spawn: false,
                     livereload: true
                 }
             },
@@ -26,16 +28,9 @@ module.exports = function(grunt) {
                     livereload: true
                 }
             },
-            compass: {
-                files: ['public/css/**/*.scss'],
-                tasks: ['compass:dev'],
-                options: {
-                    livereload: true
-                }
-            },
             css: {
                 files: ['public/css/**/*.css'],
-                tasks: ['csslint'],
+                tasks: ['csslint:dev'],
                 options: {
                     livereload: true
                 }
@@ -60,7 +55,9 @@ module.exports = function(grunt) {
                     bare: true
                 },
                 expand: true,
-                src: ['public/**/*.coffee'],
+                cwd: 'src/coffee/',
+                src: ['**/*.coffee'],
+                dest: 'public/app/',
                 ext: '.js'
             }
 
@@ -71,21 +68,19 @@ module.exports = function(grunt) {
                 configFile: '.coffeelintrc'
             },
             dev: {
-                files: [{
-                    src: ['public/app/**/*.coffee', 'app/**/*.coffee']
-                }]
+                src: ['src/coffee/**/*.coffee', 'app/**/*.coffee']
             }
         },
         compass: {
 
             options: {
-                sassPath: 'public/css/',
+                sassPath: 'src/sass/',
                 cssPath: 'public/css'
             },
 
             dev: {
                 options: {
-
+                    watch: true
                 }
             },
             dist: {
@@ -96,7 +91,9 @@ module.exports = function(grunt) {
             }
         },
         csslint: {
-            files: ['public/css/**/*.css'],
+            dev: {
+                src: ['public/css/**/*.css']
+            },
             options: {
                 csslintrc: '.csslintrc'
             }
@@ -123,8 +120,9 @@ module.exports = function(grunt) {
             }
         },
         concurrent: {
-            tasks: ['nodemon', 'watch'],
+            tasks: ['nodemon', 'watch', 'compass:dev'],
             options: {
+                limit: 3,
                 logConcurrentOutput: true
             }
         },
@@ -165,11 +163,37 @@ module.exports = function(grunt) {
     //Making grunt default to force in order not to break the project.
     grunt.option('force', true);
 
+    grunt.event.on('watch', function(action, filepath) {
+        var ext = filepath.match(/\..+$/)[0],
+            replacer;
+
+        switch (ext) {
+            case '.js':
+                grunt.config('jshint.all.src', filepath);
+                break;
+            case '.coffee':
+                replacer = function(match, p1) {
+                    return p1 + '.js';
+                };
+
+                grunt.config('coffeelint.dev.src', filepath);
+                grunt.config('coffee.dev.src', filepath.replace('src/coffee/', ''));
+                grunt.config('jshint.all.src', filepath.replace(/src\/coffee\/(.+)\.coffee$/, replacer));
+                break;
+            case '.scss':
+                grunt.config('compass.dev.src', filepath);
+                break;
+            case '.css':
+                grunt.config('csslint.dev.src', filepath);
+                break;
+        }
+    });
+
     //Default task(s).
     if (process.env.NODE_ENV === 'production') {
         grunt.registerTask('default', ['jshint', 'compass', 'csslint', 'cssmin', 'uglify', 'concurrent']);
     } else {
-        grunt.registerTask('default', ['coffee:dev', 'coffeelint', 'jshint', 'compass:dev', 'csslint', 'concurrent']);
+        grunt.registerTask('default', ['coffee:dev', 'coffeelint', 'jshint', 'csslint', 'concurrent']);
     }
 
     //Test task.

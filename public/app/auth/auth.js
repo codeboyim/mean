@@ -5,8 +5,20 @@ angular.module('mean').controller('AuthController', [
       return Auth.login(user, function() {
         return $location.path('/');
       }, function() {
-        return $scope.error = 'Failed to login';
+        $scope.error = 'Failed to login';
+        return null;
       });
+    };
+    $scope.signup = function(user) {
+      $scope.submitted = true;
+      if ($scope.form.$valid) {
+        return Auth.register(user, function() {
+          return $location.path('/');
+        }, function(err) {
+          $scope.error = err;
+          return null;
+        });
+      }
     };
     return null;
   }

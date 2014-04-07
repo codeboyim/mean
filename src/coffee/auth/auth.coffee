@@ -13,7 +13,21 @@ angular.module('mean').controller('AuthController', [
 					$location.path '/'
 				()->
 					$scope.error = 'Failed to login'
+					null
 			)
+
+		$scope.signup = (user) ->
+			$scope.submitted = true
+			
+			if $scope.form.$valid
+				Auth.register(user
+					()->
+						$location.path '/'
+					(err)->
+						$scope.error = err
+						null
+				)
+			
 		
 		null
 ])

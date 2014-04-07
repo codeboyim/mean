@@ -50,6 +50,13 @@ angular.module('mean').config [
                     data:
                         accessLevel: access.public
                 )
+                .state('auth.signup'
+                    url: '/signup'
+                    templateUrl: 'app/auth/views/signup.html'
+                    controller: 'AuthController'
+                    data:
+                        accessLevel: access.public
+                )
                 #states for admin
                 .state('admin'
                     url: '/admin'

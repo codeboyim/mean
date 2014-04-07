@@ -19,6 +19,16 @@ angular.module('mean').factory('Auth'
 					)
 					.error(error)
 
+			register: (user, success, error) ->
+				$http
+					.post('/users', user)
+					.success(
+						(res)->
+							angular.extend(currentUser, res)
+							success()
+					)
+					.error(error)
+
 			isLoggedIn: (user)->
 
 				if not user?

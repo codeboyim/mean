@@ -15,6 +15,12 @@ angular.module('mean').factory('Auth', [
           return success();
         }).error(error);
       },
+      register: function(user, success, error) {
+        return $http.post('/users', user).success(function(res) {
+          angular.extend(currentUser, res);
+          return success();
+        }).error(error);
+      },
       isLoggedIn: function(user) {
         if (user == null) {
           user = currentUser;
