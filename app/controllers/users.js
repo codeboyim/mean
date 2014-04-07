@@ -45,13 +45,13 @@ exports.signout = function(req, res) {
  * Session
  */
 exports.session = function(req, res) {
-    res.redirect('/');
+    res.send(200);
 };
 
 /**
  * Create user
  */
-exports.create = function(req, res, next) {
+exports.create = function(req, res) {
     var user = new User(req.body);
     var message = null;
 
@@ -67,14 +67,11 @@ exports.create = function(req, res, next) {
                     message = 'Please fill all the required fields';
             }
 
-            return res.render('users/signup', {
-                message: message,
-                user: user
-            });
+            return res.send(400, message);
         }
         req.logIn(user, function(err) {
-            if (err) return next(err);
-            return res.redirect('/');
+            if (err) res.send(400, err);
+            return res.jsonp(user);
         });
     });
 };
