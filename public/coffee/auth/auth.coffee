@@ -7,6 +7,7 @@ angular.module('mean').controller('AuthController', [
 	'$location'
 	'Auth'
 	($scope, $http, $rootScope, $location, Auth)->
+
 		$scope.login = (user) ->
 			Auth.login(user
 				()->
@@ -17,8 +18,8 @@ angular.module('mean').controller('AuthController', [
 			)
 
 		$scope.signup = (user) ->
-			$scope.submitted = true
-			
+			$scope.submitted=true
+
 			if $scope.form.$valid
 				Auth.register(user
 					()->
@@ -27,7 +28,6 @@ angular.module('mean').controller('AuthController', [
 						$scope.error = err
 						null
 				)
-			
-		
+
 		null
 ])

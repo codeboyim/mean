@@ -1,42 +1,49 @@
-<form name="form" class="signin form-horizontal" novalidate>
-        <div class="form-group" data-ng-class="{'has-success': form.name.$dirty&&form.name.$valid, 'has-error':(form.name.$dirty||submitted)&&form.name.$invalid}" >
-            <label class="col-md-4 control-label" for="name">Full Name</label>
-            <div class="col-md-8 has-feedback">
-                <input id="name" name="name" class="form-control" type="text" data-ng-model="user.name" data-ng-model-options="{updateOn:'blur'}" placeholder="Full Name" required />
-                <span ng-show="form.name.$dirty&&form.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                <span ng-show="(form.name.$dirty||submitted)&&form.name.$error.required" class="glyphicon glyphicon-remove form-control-feedback">required</span>
-            </div>
+<form name="form" class="auth form-horizontal" novalidate>
+    <div class="form-group" data-ng-class="{'has-success': form.name.$dirty&&form.name.$valid, 'has-error':(form.name.$dirty||submitted)&&form.name.$invalid}">
+        <label class="col-md-3 control-label" for="name">Full Name</label>
+        <div class="col-md-6 has-feedback">
+            <input id="name" name="name" class="form-control" type="text" data-ng-model="user.name" data-ng-model-options="{updateOn:'blur'}" placeholder="Full Name" required />
+            <span ng-show="form.name.$dirty&&form.name.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="(form.name.$dirty||submitted)&&form.name.$error.required" class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group" data-ng-class="{'has-success': form.email.$dirty&&form.email.$valid, 'has-error':(form.email.$dirty||submitted)&&form.email.$invalid}">
-            <label class="col-md-4 control-label" for="email">Email</label>
-            <div class="col-md-8 has-feedback">
-                <input id="email" name="email" class="form-control" type="email" data-ng-model="user.email" data-ng-model-options="{updateOn:'blur'}" placeholder="Email" required />
-                <span ng-show="form.email.$dirty&&form.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                <span ng-show="(form.email.$dirty||submitted)&&form.email.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
-            </div>
+        <div class="col-md-3">
         </div>
-        <div class="form-group" data-ng-class="{'has-success': form.username.$dirty&&form.username.$valid, 'has-error':(form.username.$dirty||submitted)&&form.username.$invalid}">
-            <label class="col-md-4 control-label" for="username">Username</label>
-            <div class="col-md-8 has-feedback">
-                <input id="username" name="username" class="form-control" type="text" data-ng-model="user.username" placeholder="Username" required />
-                <span ng-show="form.username.$dirty&&form.username.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                <span ng-show="(form.username.$dirty||submitted)&&form.username.$error.required" class="glyphicon glyphicon-remove form-control-feedback"></span>
-            </div>
+    </div>
+    <div class="form-group" data-ng-class="{'has-success': form.email.$dirty&&form.email.$valid, 'has-error':(form.email.$dirty||submitted)&&form.email.$invalid}">
+        <label class="col-md-3 control-label" for="email">Email</label>
+        <div class="col-md-6 has-feedback">
+            <input id="email" name="email" class="form-control" type="email" data-ng-model="user.email" data-ng-model-options="{updateOn:'blur'}" placeholder="Email" required />
+            <span ng-show="form.email.$dirty&&form.email.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="(form.email.$dirty||submitted)&&form.email.$error.required" class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <div class="form-group" data-ng-class="{'has-success': form.password.$dirty&&form.password.$valid, 'has-error':(form.password.$dirty||submitted)&&form.password.$invalid}">
-            <label class="col-md-4 control-label" for="password">Password</label>
-            <div class="col-md-8 has-feedback">
-                <input id="password" name="password" class="form-control" type="password" data-ng-model="user.password" data-ng-model-options="{updateOn:'blur'}" placeholder="Password" required />
-                <span ng-show="form.password.$dirty&&form.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
-                <span ng-show="(form.password.$dirty||submitted)&&form.password.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
-            </div>
+        <div class="col-md-3">
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-                <button class="btn btn-primary" data-ng-click="signup(user)">Sign up</button>&nbsp;
-                or&nbsp;<a class="show-login" href="/signin">login</a>
-                <alert ng-if="error" type="warning">{{error}}</alert>
-            </div>
+    </div>
+    <div class="form-group" data-ng-class="{'has-success': form.username.$dirty&&form.username.$valid, 'has-error':(form.username.$dirty||submitted)&&form.username.$invalid}">
+        <label class="col-md-3 control-label" for="username">Username</label>
+        <div class="col-md-6 has-feedback">
+            <input id="username" name="username" class="form-control" type="text" data-ng-model="user.username" placeholder="Username" required />
+            <span ng-show="form.username.$dirty&&form.username.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="(form.username.$dirty||submitted)&&form.username.$error.required" class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
-        <span ng-bind="user.name"></span>
-    </form>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <div class="form-group" data-ng-class="{'has-success': form.password.$dirty&&form.password.$valid, 'has-error':(form.password.$dirty||submitted)&&form.password.$invalid}">
+        <label class="col-md-3 control-label" for="password">Password</label>
+        <div class="col-md-6 has-feedback">
+            <input id="password" name="password" class="form-control" type="password" data-ng-model="user.password" data-ng-model-options="{updateOn:'blur'}" placeholder="Password" required />
+            <span ng-show="form.password.$dirty&&form.password.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+            <span ng-show="(form.password.$dirty||submitted)&&form.password.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        </div>
+        <div class="col-md-1">            
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-8">
+            <button class="btn btn-primary" data-ng-click="signup(user)">Sign up</button>&nbsp; or&nbsp;
+            <a class="show-login" href="/signin">login</a>
+            <alert ng-if="error" type="warning">{{error}}</alert>
+        </div>
+    </div>    
+</form>
