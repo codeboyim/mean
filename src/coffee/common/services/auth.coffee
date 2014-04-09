@@ -30,8 +30,8 @@ angular.module('mean').factory('Auth'
 					.error(error)
 
 			isLoggedIn: (user)->
-
-				if not user?
+				
+				if user == null
 					user = currentUser
 
 				user.role isnt routingConfig.userRoles.public
@@ -39,7 +39,7 @@ angular.module('mean').factory('Auth'
 						
 			authorize: (accessLevel, role)->
 				
-				if not role?
+				if role == null
 					role = currentUser.role
 
 				accessLevel is '*' or accessLevel.indexOf(role) isnt -1

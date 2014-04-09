@@ -22,13 +22,13 @@ angular.module('mean').factory('Auth', [
         }).error(error);
       },
       isLoggedIn: function(user) {
-        if (user == null) {
+        if (user === null) {
           user = currentUser;
         }
         return user.role !== routingConfig.userRoles["public"];
       },
       authorize: function(accessLevel, role) {
-        if (role == null) {
+        if (role === null) {
           role = currentUser.role;
         }
         return accessLevel === '*' || accessLevel.indexOf(role) !== -1;
