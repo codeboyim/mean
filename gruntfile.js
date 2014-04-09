@@ -63,7 +63,7 @@ module.exports = function(grunt) {
                     bare: true
                 },
                 expand: true,
-                cwd: 'src/coffee/',
+                cwd: 'public/coffee/',
                 src: ['**/*.coffee'],
                 dest: 'public/app/',
                 ext: '.js'
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                 configFile: '.coffeelintrc'
             },
             dev: {
-                src: ['src/coffee/**/*.coffee', 'app/**/*.coffee']
+                src: ['public/coffee/**/*.coffee', 'app/**/*.coffee']
             }
         },
         sass: {
