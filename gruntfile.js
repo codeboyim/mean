@@ -209,7 +209,7 @@ module.exports = function(grunt) {
     if (process.env.NODE_ENV === 'production') {
         grunt.registerTask('default', ['jshint', 'compass', 'csslint', 'cssmin', 'uglify', 'concurrent']);
     } else {
-        grunt.registerTask('default', ['concurrent']);
+        grunt.registerTask('default', ['coffee:dev', 'sass:dev', 'concurrent']);
     }
 
     //Test task.
