@@ -1,6 +1,7 @@
 'use strict';
 angular.module('mean').controller('AuthController', [
   '$scope', '$http', '$rootScope', '$location', 'Auth', function($scope, $http, $rootScope, $location, Auth) {
+    $scope.validation = Auth.validate($scope);
     $scope.login = function(user) {
       return Auth.login(user, function() {
         return $location.path('/');

@@ -7,6 +7,8 @@ angular.module('mean').controller('AuthController', [
 	'$location'
 	'Auth'
 	($scope, $http, $rootScope, $location, Auth)->
+		
+		$scope.validation = Auth.validate $scope
 
 		$scope.login = (user) ->
 			Auth.login(user
