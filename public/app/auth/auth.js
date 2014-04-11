@@ -2,6 +2,11 @@
 angular.module('mean').controller('AuthController', [
   '$scope', '$http', '$rootScope', '$location', 'Auth', function($scope, $http, $rootScope, $location, Auth) {
     $scope.validation = Auth.validate($scope);
+    $scope.isEmailUnique = function(email) {
+      return Auth.checkIfAvailable({
+        email: email
+      });
+    };
     $scope.login = function(user) {
       return Auth.login(user, function() {
         return $location.path('/');

@@ -76,6 +76,17 @@ exports.create = function(req, res) {
     });
 };
 
+exports.checkIfAvailable = function(req, res) {
+    User
+        .findOne(req.body)
+        .exec(function(err, user) {
+            if (err) res.send(500, err);
+            res.jsonp({
+                result: !user
+            });
+        });
+}
+
 /**
  * Send User
  */

@@ -18,10 +18,10 @@ angular.module('mean').factory('Auth'
 				isdirty(name) && scope.form[name].$valid
 
 			isrequired = (name)->
-				isdirty(name) && scope.form[name].$error.$required
+				isdirty(name) && scope.form[name].$error.required
 
 			isemail = (name)->
-				isdirty(name) && scope.form[name].$error.$email
+				isdirty(name) && scope.form[name].$error.email
 
 			listener = ()->
 				form = scope.form
@@ -60,6 +60,10 @@ angular.module('mean').factory('Auth'
 							success()
 					)
 					.error(error)
+
+			checkIfAvailable: (user) ->
+				$http
+					.post '/users/check', user
 
 			isLoggedIn: (user)->
 				

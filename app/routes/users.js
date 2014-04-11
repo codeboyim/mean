@@ -12,6 +12,7 @@ module.exports = function(app, passport) {
 
     // Setting up the users api
     app.post('/users', users.create);
+    app.post('/users/check', users.checkIfAvailable);
 
     // Setting up the userId param
     app.param('userId', users.user);

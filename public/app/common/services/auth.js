@@ -17,10 +17,10 @@ angular.module('mean').factory('Auth', [
       return isdirty(name) && scope.form[name].$valid;
     };
     isrequired = function(name) {
-      return isdirty(name) && scope.form[name].$error.$required;
+      return isdirty(name) && scope.form[name].$error.required;
     };
     isemail = function(name) {
-      return isdirty(name) && scope.form[name].$error.$email;
+      return isdirty(name) && scope.form[name].$error.email;
     };
     listener = function() {
       var form, name, submitted, _i, _len, _ref;
@@ -54,6 +54,9 @@ angular.module('mean').factory('Auth', [
           angular.extend(currentUser, res);
           return success();
         }).error(error);
+      },
+      checkIfAvailable: function(user) {
+        return $http.post('/users/check', user);
       },
       isLoggedIn: function(user) {
         if (user === null) {

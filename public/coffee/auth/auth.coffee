@@ -10,6 +10,9 @@ angular.module('mean').controller('AuthController', [
 		
 		$scope.validation = Auth.validate $scope
 
+		$scope.isEmailUnique = (email) ->
+			Auth.checkIfAvailable {email:email}
+
 		$scope.login = (user) ->
 			Auth.login(user
 				()->
