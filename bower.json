@@ -12,7 +12,8 @@
     "angular-ui-router": "#master",
     "angular-ui-utils": "bower-route",
     "angular-lodash": "~0.1.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "bootstrap-sass-official": "~3.1.1"
   },
   "resolutions": {
     "angular": "v1.3.0-build.2582"

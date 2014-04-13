@@ -82,7 +82,8 @@ module.exports = function(grunt) {
         sass: {
 
             options: {
-                compass: true
+                compass: true,
+                loadPath: ['public/lib/bootstrap-sass-official/vendor/assets/stylesheets']
             },
             dev: {
                 options: {
