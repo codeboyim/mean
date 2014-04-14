@@ -22,7 +22,7 @@ angular.module('mean').factory('Auth'
 
 			register: (user, success, error) ->
 				$http
-					.post('/users', user)
+					.post('/api/users', user)
 					.success(
 						(res)->
 							angular.extend(currentUser, res)

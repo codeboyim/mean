@@ -16,7 +16,7 @@ angular.module('mean').factory('Auth', [
         }).error(error);
       },
       register: function(user, success, error) {
-        return $http.post('/users', user).success(function(res) {
+        return $http.post('/api/users', user).success(function(res) {
           angular.extend(currentUser, res);
           return success();
         }).error(error);
