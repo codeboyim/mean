@@ -1,6 +1,6 @@
 'use strict';
 angular.module('mean').controller('AuthController', [
-  '$scope', '$http', '$rootScope', '$location', 'Auth', function($scope, $http, $rootScope, $location, Auth) {
+  '$scope', '$http', '$location', 'Auth', function($scope, $http, $location, Auth, $interval) {
     $scope.isEmailUnique = function(val) {
       return Auth.checkIfAvailable({
         email: val

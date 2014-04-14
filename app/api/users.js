@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    _ = require('lodash');
 
 /**
  * Auth callback
@@ -45,7 +46,10 @@ exports.signout = function(req, res) {
  * Session
  */
 exports.session = function(req, res) {
-    res.send(200);
+    var user = _.cloneDeep(res.user);
+    delete user.salt;
+    delete user.hashed_password;
+    res.send(200, user);
 };
 
 /**

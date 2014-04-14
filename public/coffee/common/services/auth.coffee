@@ -20,6 +20,16 @@ angular.module('mean').factory('Auth'
 					)
 					.error(error)
 
+			signout: (success, error) ->
+				$http
+					.get('/api/users/signout')
+					.success(
+						()->
+							currentUser = { username: '', role: userRoles.public }
+							success()
+					)
+					.error error 
+
 			register: (user, success, error) ->
 				$http
 					.post('/api/users', user)
@@ -36,7 +46,7 @@ angular.module('mean').factory('Auth'
 
 			isLoggedIn: (user)->
 				
-				if user == null
+				if user is null
 					user = currentUser
 
 				user.role isnt routingConfig.userRoles.public
@@ -51,5 +61,6 @@ angular.module('mean').factory('Auth'
 
 			accessLevels: accessLevels
 			userRoles:userRoles
+			currentUser:currentUser
 	]
 )

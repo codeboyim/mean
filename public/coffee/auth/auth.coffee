@@ -3,10 +3,9 @@
 angular.module('mean').controller('AuthController', [
 	'$scope'
 	'$http'
-	'$rootScope'
 	'$location'
 	'Auth'
-	($scope, $http, $rootScope, $location, Auth)->
+	($scope, $http, $location, Auth, $interval)->
 
 		$scope.isEmailUnique = (val) ->
 			Auth.checkIfAvailable {email:val}
@@ -22,6 +21,7 @@ angular.module('mean').controller('AuthController', [
 					$scope.error = 'login failed'
 					null
 			)
+
 
 		$scope.signup = (user) ->
 			$scope.submitted=true

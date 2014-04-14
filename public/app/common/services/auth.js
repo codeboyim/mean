@@ -15,6 +15,15 @@ angular.module('mean').factory('Auth', [
           return success();
         }).error(error);
       },
+      signout: function(success, error) {
+        return $http.get('/api/users/signout').success(function() {
+          currentUser = {
+            username: '',
+            role: userRoles["public"]
+          };
+          return success();
+        }).error(error);
+      },
       register: function(user, success, error) {
         return $http.post('/api/users', user).success(function(res) {
           angular.extend(currentUser, res);
@@ -37,7 +46,8 @@ angular.module('mean').factory('Auth', [
         return accessLevel === '*' || accessLevel.indexOf(role) !== -1;
       },
       accessLevels: accessLevels,
-      userRoles: userRoles
+      userRoles: userRoles,
+      currentUser: currentUser
     };
   }
 ]);

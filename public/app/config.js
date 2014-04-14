@@ -7,18 +7,26 @@ angular.module('mean').config([
 
 angular.module('mean').run([
   '$rootScope', '$window', '$state', 'Auth', function($rootScope, $window, $state, Auth) {
-    return $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState) {
       if (!Auth.authorize(toState.data.accessLevel)) {
         console.log('unauthorized access');
         event.preventDefault();
         if (fromState.url === '^') {
           if (Auth.isLoggedIn()) {
-            return $state.go('home');
+            $state.go('home');
           } else {
-            return $state.go('auth.signin');
+            $state.go('auth.signin');
           }
         }
       }
+      if (toState.name === 'signout') {
+        return Auth.signout(function() {
+          return $state.go('home');
+        }, function() {
+          return console.log('error');
+        });
+      }
     });
+    return $rootScope.currentUser = Auth.currentUser;
   }
 ]);

@@ -57,6 +57,11 @@ angular.module('mean').config [
                     data:
                         accessLevel: access.public
                 )
+                .state('signout'
+                    url: '/signout'
+                    data:
+                        accessLevel: access.public
+                )
                 #states for admin
                 .state('admin'
                     url: '/admin'
