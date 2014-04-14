@@ -10,7 +10,7 @@ angular.module('mean').factory('Auth', [
     };
     return {
       login: function(user, success, error) {
-        return $http.post('/users/session', user).success(function(res) {
+        return $http.post('/api/users/session', user).success(function(res) {
           angular.extend(currentUser, res);
           return success();
         }).error(error);
@@ -22,7 +22,7 @@ angular.module('mean').factory('Auth', [
         }).error(error);
       },
       checkIfAvailable: function(user) {
-        return $http.post('/users/check', user);
+        return $http.post('/api/users/check', user);
       },
       isLoggedIn: function(user) {
         if (user === null) {

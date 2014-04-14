@@ -12,7 +12,7 @@ angular.module('mean').factory('Auth'
 
 			login: (user, success, error) ->
 				$http
-					.post('/users/session', user)
+					.post('/api/users/session', user)
 					.success(
 						(res)->
 							angular.extend(currentUser, res)
@@ -32,7 +32,7 @@ angular.module('mean').factory('Auth'
 
 			checkIfAvailable: (user) ->
 				$http
-					.post '/users/check', user
+					.post '/api/users/check', user
 
 			isLoggedIn: (user)->
 				
