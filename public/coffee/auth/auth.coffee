@@ -8,15 +8,18 @@ angular.module('mean').controller('AuthController', [
 	'Auth'
 	($scope, $http, $rootScope, $location, Auth)->
 
-		$scope.isEmailUnique = (email) ->
-			Auth.checkIfAvailable {email:email}
+		$scope.isEmailUnique = (val) ->
+			Auth.checkIfAvailable {email:val}
+
+		$scope.isUsernameUnique = (val)->
+			Auth.checkIfAvailable {username:val}
 
 		$scope.login = (user) ->
 			Auth.login(user
 				()->
 					$location.path '/'
 				()->
-					$scope.error = 'Failed to login'
+					$scope.error = 'login failed'
 					null
 			)
 
@@ -28,7 +31,7 @@ angular.module('mean').controller('AuthController', [
 					()->
 						$location.path '/'
 					(err)->
-						$scope.error = err
+						$scope.error = err || 'request failed'
 						null
 				)
 
