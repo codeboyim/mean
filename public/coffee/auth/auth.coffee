@@ -7,8 +7,6 @@ angular.module('mean').controller('AuthController', [
 	'$location'
 	'Auth'
 	($scope, $http, $rootScope, $location, Auth)->
-		
-		$scope.validation = Auth.validate $scope
 
 		$scope.isEmailUnique = (email) ->
 			Auth.checkIfAvailable {email:email}
