@@ -91,7 +91,7 @@ module.exports = function(app, passport, db) {
         // Connect flash for flash messages
         app.use(flash());
 
-        
+
         // Setting the fav icon and static folder
         app.use(express.favicon());
         app.use(express.static(config.root + '/public'));
@@ -117,10 +117,14 @@ module.exports = function(app, passport, db) {
 
         // Assume 404 since no middleware responded
         app.use(function(req, res) {
-            res.status(404).render('404', {
-                url: req.originalUrl,
-                error: 'Not found'
-            });
+            if (req.is('json')) {
+                res.send(404, 'requested api not found');
+            } else {
+                res.status(404).render('404', {
+                    url: req.originalUrl,
+                    error: 'Not found'
+                });
+            }
         });
 
     });
