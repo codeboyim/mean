@@ -31,3 +31,12 @@ footer {
         padding:5px 0 12px 10px
     }
 }
+
+.form-horizontal .has-feedback .feedback-message{
+    right:auto;
+}
+.has-feedback .feedback-message{
+    width:auto;
+    position:relative;
+    text-align: left;
+}
