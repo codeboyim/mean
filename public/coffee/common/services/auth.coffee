@@ -46,7 +46,7 @@ angular.module('mean').factory('Auth'
 
 			isLoggedIn: (user)->
 				
-				if user is null
+				if not user?
 					user = currentUser
 
 				user.role isnt routingConfig.userRoles.public

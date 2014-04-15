@@ -34,7 +34,7 @@ angular.module('mean').factory('Auth', [
         return $http.post('/api/users/check', user);
       },
       isLoggedIn: function(user) {
-        if (user === null) {
+        if (user == null) {
           user = currentUser;
         }
         return user.role !== routingConfig.userRoles["public"];
