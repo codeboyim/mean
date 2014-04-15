@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    _ = require('lodash');
+    userRoles = require('../../public/app/routingConfig').userRoles;
 
 /**
  * Auth callback
@@ -49,7 +49,7 @@ exports.session = function(req, res) {
     var user = req.user.toJSON();
     delete user.salt;
     delete user.hashed_password;
-    res.send(200, user);
+    res.jsonp(user);
 };
 
 /**
@@ -59,6 +59,7 @@ exports.create = function(req, res) {
     var user = new User(req.body);
     var message = null;
 
+    user.role = userRoles.user;
     user.provider = 'local';
     user.save(function(err) {
         if (err) {
