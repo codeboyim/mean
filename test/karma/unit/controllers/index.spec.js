@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-    describe('MEAN controllers', function() {
+    xdescribe('MEAN controllers', function() {
         describe('IndexController', function() {
             // Load the controllers module
             beforeEach(module('mean'));
