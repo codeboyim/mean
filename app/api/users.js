@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    userRoles = require('../../public/app/routingConfig').userRoles,
+    passport = require('passport');
 
 /**
  * Auth callback
@@ -38,23 +40,47 @@ exports.signup = function(req, res) {
  */
 exports.signout = function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.send(200);
 };
 
 /**
  * Session
  */
 exports.session = function(req, res) {
-    res.redirect('/');
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return res.jsonp(500, {
+                error: err
+            });
+        }
+        if (!user) {
+            return res.jsonp(401, {
+                error: info ? (info.message || '') : 'Unknown email or wrong password'
+            });
+        }
+
+        req.logIn(user, function(err) {
+            if (err) {
+                return res.jsonp(500, {
+                    error: err
+                });
+            }
+            delete user.salt;
+            delete user.hashed_password;
+            return res.jsonp(user);
+        });
+
+    })(req, res);
 };
 
 /**
  * Create user
  */
-exports.create = function(req, res, next) {
+exports.create = function(req, res) {
     var user = new User(req.body);
     var message = null;
 
+    user.role = userRoles.user;
     user.provider = 'local';
     user.save(function(err) {
         if (err) {
@@ -67,16 +93,24 @@ exports.create = function(req, res, next) {
                     message = 'Please fill all the required fields';
             }
 
-            return res.render('users/signup', {
-                message: message,
-                user: user
-            });
+            return res.send(400, message);
         }
         req.logIn(user, function(err) {
-            if (err) return next(err);
-            return res.redirect('/');
+            if (err) res.send(400, err);
+            return res.jsonp(user);
         });
     });
+};
+
+exports.checkIfAvailable = function(req, res) {
+    User
+        .findOne(req.body)
+        .exec(function(err, user) {
+            if (err) res.send(500, err);
+            res.jsonp({
+                result: !user
+            });
+        });
 };
 
 /**

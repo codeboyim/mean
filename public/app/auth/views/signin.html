@@ -1,0 +1,23 @@
+<form class="signin form-horizontal" data-ng-submit="login(credentials)" novalidate>
+    <div class="form-group">
+        <label class="col-md-3 control-label" for="email">Email</label>
+        <div class="col-md-6">
+            <input id="email" class="form-control" type="email" data-ng-model="credentials.email" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label" for="password">Password</label>
+        <div class="col-md-6">
+            <input id="password" class="form-control" type="password" data-ng-model="credentials.password" placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-8">
+            <button class="btn btn-primary" type="submit">Sign in</button>&nbsp; or&nbsp;
+            <a class="show-signup" href="/signup">Sign up</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <alert ng-show="error" class="col-md-offset-2 col-md-7" type=" 'danger' " close="error=''">{{error}}</alert>
+    </div>
+</form>

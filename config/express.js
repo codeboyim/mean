@@ -91,12 +91,13 @@ module.exports = function(app, passport, db) {
         // Connect flash for flash messages
         app.use(flash());
 
-        // Routes should be at the last
-        app.use(app.router);
 
         // Setting the fav icon and static folder
         app.use(express.favicon());
         app.use(express.static(config.root + '/public'));
+
+        // Routes should be at the last
+        app.use(app.router);
 
         // Assume "not found" in the error msgs is a 404. this is somewhat
         // silly, but valid, you can do whatever you like, set properties,
@@ -116,10 +117,14 @@ module.exports = function(app, passport, db) {
 
         // Assume 404 since no middleware responded
         app.use(function(req, res) {
-            res.status(404).render('404', {
-                url: req.originalUrl,
-                error: 'Not found'
-            });
+            if (req.is('json')) {
+                res.send(404, 'requested api not found');
+            } else {
+                res.status(404).render('404', {
+                    url: req.originalUrl,
+                    error: 'Not found'
+                });
+            }
         });
 
     });

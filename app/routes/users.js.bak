@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 // User routes use users controller
 var users = require('../controllers/users');
 
@@ -12,15 +13,18 @@ module.exports = function(app, passport) {
 
     // Setting up the users api
     app.post('/users', users.create);
+    app.post('/users/check', users.checkIfAvailable);
 
     // Setting up the userId param
     app.param('userId', users.user);
 
     // Setting the local strategy route
-    app.post('/users/session', passport.authenticate('local', {
-        failureRedirect: '/signin',
-        failureFlash: true
-    }), users.session);
+    // app.post('/users/session', passport.authenticate('local', {
+    //     failureRedirect: '/signin',
+    //     failureFlash: true
+    // }), users.session);
+
+    app.post('/users/session', passport.authenticate('local'));
 
     // Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {
@@ -74,3 +78,4 @@ module.exports = function(app, passport) {
     }), users.authCallback);
 
 };
+*/

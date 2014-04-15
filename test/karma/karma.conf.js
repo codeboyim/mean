@@ -25,7 +25,6 @@ module.exports = function(config) {
             'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
             'public/lib/angular-bootstrap/ui-bootstrap.js',
             'public/app/**/*.js',
-            'public/common/**/*.js',
             'test/karma/unit/**/*.js'
         ],
 

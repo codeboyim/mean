@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Global', 'Articles',
-    function($scope, $stateParams, $location, Global, Articles) {
-        $scope.global = Global;
+angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Articles',
+    function($scope, $stateParams, $location, Articles) {
+        //$scope.global = Global;
 
         $scope.create = function() {
             var article = new Articles({
