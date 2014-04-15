@@ -2,11 +2,11 @@
     <li>
         <a class="navbar-brand" href="/">MEAN Store</a>
     </li>
-    <li data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+    <li data-ng-if="authenticated()" data-ng-repeat="item in menu" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
         <a href="/{{item.link}}">{{item.title}}</a>
     </li>
 </ul>
-<ul data-ng-if="!authenticated" class="nav navbar-nav pull-right">
+<ul data-ng-if="!authenticated()" class="nav navbar-nav pull-right">
     <li>
         <a href="/signup">Signup</a>
     </li>
@@ -15,7 +15,7 @@
         <a href="/signin">Signin</a>
     </li>
 </ul>
-<ul data-ng-if="authenticated" class="nav navbar-nav pull-right">
+<ul data-ng-if="authenticated()" class="nav navbar-nav pull-right">
     <li class="dropdown">
         <a data-target="#" href="#" class="dropdown-toggle" data-toggle="dropdown">
             {{user.username}} <b class="caret"></b>

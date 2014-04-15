@@ -2,7 +2,7 @@
 angular.module('mean').controller('HeaderController', [
   '$scope', 'Auth', function($scope, Auth) {
     $scope.user = Auth.currentUser;
-    $scope.authenticated = Auth.isLoggedIn();
+    $scope.authenticated = Auth.isLoggedIn;
     $scope.menu = [
       {
         'title': 'Articles',
