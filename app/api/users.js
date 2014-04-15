@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    userRoles = require('../../public/app/routingConfig').userRoles;
+    userRoles = require('../../public/app/routingConfig').userRoles,
+    passport = require('passport');
 
 /**
  * Auth callback
@@ -46,10 +47,30 @@ exports.signout = function(req, res) {
  * Session
  */
 exports.session = function(req, res) {
-    var user = req.user.toJSON();
-    delete user.salt;
-    delete user.hashed_password;
-    res.jsonp(user);
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return res.jsonp(500, {
+                error: err
+            });
+        }
+        if (!user) {
+            return res.jsonp(401, {
+                error: info ? (info.message || '') : 'Unknown email or wrong password'
+            });
+        }
+
+        req.logIn(user, function(err) {
+            if (err) {
+                return res.jsonp(500, {
+                    error: err
+                });
+            }
+            delete user.salt;
+            delete user.hashed_password;
+            return res.jsonp(user);
+        });
+
+    })(req, res);
 };
 
 /**
@@ -90,7 +111,7 @@ exports.checkIfAvailable = function(req, res) {
                 result: !user
             });
         });
-}
+};
 
 /**
  * Send User

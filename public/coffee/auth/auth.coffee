@@ -17,8 +17,8 @@ angular.module('mean').controller('AuthController', [
 			Auth.login(user
 				()->
 					$location.path '/'
-				()->
-					$scope.error = 'login failed'
+				(data)->
+					$scope.error = data?.error ? 'login failed'
 					null
 			)
 
@@ -30,8 +30,8 @@ angular.module('mean').controller('AuthController', [
 				Auth.register(user
 					()->
 						$location.path '/'
-					(err)->
-						$scope.error = err || 'request failed'
+					(data)->
+						$scope.error = data?.error ? 'signup failed'
 						null
 				)
 

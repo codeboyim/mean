@@ -39,14 +39,9 @@ module.exports = function(passport) {
                 if (err) {
                     return done(err);
                 }
-                if (!user) {
+                if (!user || !user.authenticate(password)) {
                     return done(null, false, {
-                        message: 'Unknown user'
-                    });
-                }
-                if (!user.authenticate(password)) {
-                    return done(null, false, {
-                        message: 'Invalid password'
+                        message: 'Unknown email or wrong password'
                     });
                 }
                 return done(null, user);

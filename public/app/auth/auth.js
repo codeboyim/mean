@@ -14,8 +14,9 @@ angular.module('mean').controller('AuthController', [
     $scope.login = function(user) {
       return Auth.login(user, function() {
         return $location.path('/');
-      }, function() {
-        $scope.error = 'login failed';
+      }, function(data) {
+        var _ref;
+        $scope.error = (_ref = data != null ? data.error : void 0) != null ? _ref : 'login failed';
         return null;
       });
     };
@@ -24,8 +25,9 @@ angular.module('mean').controller('AuthController', [
       if ($scope.form.$valid) {
         return Auth.register(user, function() {
           return $location.path('/');
-        }, function(err) {
-          $scope.error = err || 'request failed';
+        }, function(data) {
+          var _ref;
+          $scope.error = (_ref = data != null ? data.error : void 0) != null ? _ref : 'signup failed';
           return null;
         });
       }
