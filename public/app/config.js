@@ -13,18 +13,11 @@ angular.module('mean').run([
         event.preventDefault();
         if (fromState.url === '^') {
           if (Auth.isLoggedIn()) {
-            $state.go('home');
+            return $state.go('home');
           } else {
-            $state.go('auth.signin');
+            return $state.go('auth.signin');
           }
         }
-      }
-      if (toState.name === 'signout') {
-        return Auth.signout(function() {
-          return $state.go('home');
-        }, function() {
-          return console.log('error');
-        });
       }
     });
     return $rootScope.currentUser = Auth.currentUser;

@@ -1,10 +1,8 @@
-@import "compass";
-@import "bootstrap";
-
-body{
+@import"compass";
+ @import"bootstrap";
+ body {
     color: $gray;
 }
-
 .navbar {
     margin-bottom: 0;
     .nav>li>a.brand {
@@ -12,31 +10,36 @@ body{
         margin-left:0;
     }
 }
- 
 .content {
     margin-top:70px;
-    width:100% 
+    width:100%
 }
-
 footer {
     position:fixed;
     left:0;
-    bottom:0;    
+    bottom:0;
     height:30px;
     width:100%;
     background:#ddd;
     @include box-shadow(0 8px 6px 6px black);
-
-    p{
+    p {
         padding:5px 0 12px 10px
     }
 }
-
-.form-horizontal .has-feedback .feedback-message{
+.form-horizontal .has-feedback .feedback-message {
     right:auto;
 }
-.has-feedback .feedback-message{
+.has-feedback .feedback-message {
     width:auto;
     position:relative;
     text-align: left;
+}
+.dropdown-menu>li> {
+    .btn {
+        @extend a;
+        border-radius: 0;
+        border:none;
+        width:100%;
+        text-align: left;
+    }
 }

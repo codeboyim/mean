@@ -29,13 +29,5 @@ angular.module('mean').run [
                         else
                             $state.go 'auth.signin'
 
-                if toState.name is 'signout'
-                    Auth.signout(
-                        ()->
-                            $state.go 'home'
-                        ()->
-                            console.log 'error'
-                    )
-
         $rootScope.currentUser = Auth.currentUser
 ]

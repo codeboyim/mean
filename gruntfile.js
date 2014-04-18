@@ -87,7 +87,8 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    sourcemap: true
+                    sourcemap: true,
+                    quiet: true
                 },
 
                 expand: true,
