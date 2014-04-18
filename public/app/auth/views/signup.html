@@ -47,7 +47,7 @@
             <input id="password" name="password" class="form-control" type="password" data-ng-model="user.password" placeholder="Password" data-ng-model-options="{updateOn: 'default blur', debounce: 500}" required />
             <span ng-show="form.password.$dirty" class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok': form.password.$valid, 'glyphicon-remove': form.password.$invalid}"></span>
         </div>
-        <div class="col-md-3 has-error">
+        <div class="col-md-3 has-error" data-ng-show="form.password.$dirty && form.password.$invalid">
             <span class="form-control-feedback feedback-message" data-ng-show="form.password.$error.required">
                 required
             </span>
