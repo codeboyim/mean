@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         watch: {
             coffee: {
                 files: ['public/coffee/**/*.coffee', 'app/**/*.coffee'],
-                tasks: ['coffeelint:dev', 'coffee:dev', 'jshint'],
+                tasks: ['coffeelint:dev', 'coffee:dev'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -192,7 +192,7 @@ module.exports = function(grunt) {
 
                 grunt.config('coffeelint.dev.src', filepath);
                 grunt.config('coffee.dev.src', filepath.replace('public/coffee/', ''));
-                grunt.config('jshint.all.src', filepath.replace(/public\/coffee\/(.+)\.coffee$/, replacer));
+                //grunt.config('jshint.all.src', filepath.replace(/public\/coffee\/(.+)\.coffee$/, replacer));
                 break;
             case '.scss':
                 replacer = function(match, p1) {
