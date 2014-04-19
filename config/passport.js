@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
     LinkedinStrategy = require('passport-linkedin').Strategy,
     User = mongoose.model('User'),
+    userRoles = require('../public/app/routingConfig').userRoles,
     config = require('./config');
 
 module.exports = function(passport) {
@@ -107,6 +108,7 @@ module.exports = function(passport) {
                         user = new User({
                             name: profile.displayName,
                             email: profile.emails[0].value,
+                            role: userRoles.user,
                             username: profile.username || profile.emails[0].value
                         });
                     }

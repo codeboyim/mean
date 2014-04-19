@@ -1,6 +1,14 @@
 'use strict';
 angular.module('mean').controller('AuthController', [
-  '$scope', '$http', '$location', 'Auth', function($scope, $http, $location, Auth, $interval) {
+  '$http', '$location', '$rootScope', '$scope', '$state', '$window', 'Auth', function($http, $location, $rootScope, $scope, $state, $window, Auth) {
+    var screen;
+    screen = $window.screen;
+    $window.fbCallback = function(user) {
+      if (user) {
+        angular.extend(Auth.currentUser, user);
+        return $state.go('home');
+      }
+    };
     $scope.isEmailUnique = function(val) {
       return Auth.checkIfAvailable({
         email: val
@@ -31,6 +39,13 @@ angular.module('mean').controller('AuthController', [
           return null;
         });
       }
+    };
+    $scope.fb_login = function() {
+      var left, top, winfb;
+      left = screen.width / 2 - 250;
+      top = screen.height / 2 - 150;
+      winfb = $window.open('/auth/facebook', 'FB_Dialog', "left=" + left + ", top=" + top + ", width=500,height=300,chrome=yes,centerscreen=yes,location=no");
+      return null;
     };
     return null;
   }

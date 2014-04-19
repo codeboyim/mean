@@ -30,6 +30,7 @@ angular.module('mean').config([
     }).state('auth', {
       abstract: true,
       templateUrl: 'app/auth/views/auth.html',
+      controller: 'AuthController',
       data: {
         accessLevel: access["public"]
       }

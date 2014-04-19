@@ -22,10 +22,10 @@ angular.module('mean').factory('Auth'
 
 			signout: (success, error) ->
 				$http
-					.get('/api/users/signout')
+					.post('/api/users/signout')
 					.success(
 						()->
-							currentUser = { username: '', role: userRoles.public }
+							angular.extend(currentUser, {name:'', email:'', username: '', role: userRoles.public })
 							success()
 					)
 					.error error 

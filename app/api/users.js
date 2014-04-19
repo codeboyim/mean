@@ -8,12 +8,7 @@ var mongoose = require('mongoose'),
     userRoles = require('../../public/app/routingConfig').userRoles,
     passport = require('passport');
 
-/**
- * Auth callback
- */
-exports.authCallback = function(req, res) {
-    res.redirect('/');
-};
+
 
 /**
  * Show login form
@@ -65,6 +60,7 @@ exports.session = function(req, res) {
                     error: err
                 });
             }
+            user = user.toJSON()
             delete user.salt;
             delete user.hashed_password;
             return res.jsonp(user);

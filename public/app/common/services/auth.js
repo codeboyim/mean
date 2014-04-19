@@ -16,11 +16,13 @@ angular.module('mean').factory('Auth', [
         }).error(error);
       },
       signout: function(success, error) {
-        return $http.get('/api/users/signout').success(function() {
-          currentUser = {
+        return $http.post('/api/users/signout').success(function() {
+          angular.extend(currentUser, {
+            name: '',
+            email: '',
             username: '',
             role: userRoles["public"]
-          };
+          });
           return success();
         }).error(error);
       },
