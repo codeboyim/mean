@@ -1,5 +1,8 @@
 @import"compass";
  @import"bootstrap";
+ @import"compass/utilities/sprites";
+ @import"icons/*.png";
+ @include all-icons-sprites;
  body {
     color: $gray;
 }
@@ -42,4 +45,15 @@ footer {
         width:100%;
         text-align: left;
     }
+}
+.btn-signin-facebook {
+    @include text-hide();
+    &, &:active, &.active {
+        @include icons-sprite(signin-with-facebook);
+        height: icons-sprite-height(signin-with-facebook);
+        width: icons-sprite-width(signin-with-facebook);
+    }
+}
+.signin-list li{
+    margin-bottom: 15px;
 }
