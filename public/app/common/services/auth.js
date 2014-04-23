@@ -42,7 +42,7 @@ angular.module('mean').factory('Auth', [
         return user.role !== routingConfig.userRoles["public"];
       },
       authorize: function(accessLevel, role) {
-        if (role === null) {
+        if (role == null) {
           role = currentUser.role;
         }
         return accessLevel === '*' || accessLevel.indexOf(role) !== -1;

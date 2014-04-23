@@ -54,7 +54,7 @@ angular.module('mean').factory('Auth'
 						
 			authorize: (accessLevel, role)->
 				
-				if role == null
+				if not role?
 					role = currentUser.role
 
 				accessLevel is '*' or accessLevel.indexOf(role) isnt -1
